@@ -10,4 +10,11 @@ get '/' do
   erb(:index)
 end
 
-get 
+get '/recipes' do
+  @recipes = Recipe.all
+  erb :recipes
+end
+
+get '/recipes/new' do
+  erb :add_recipe
+end

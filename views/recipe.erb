@@ -6,23 +6,20 @@
 </p>
 <br>
 <h3>Ingredients:</h3>
-<form action="/recipes/<%= @recipe.id %>" method="post">
-  <input type="hidden" name="_method" value="delete">
-  <% @ingredients.each do |ingredient| %>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" name="ingredient_ids[]" value="<%= ingredient.id %>"> <%= ingredient.name %>
-      </label>
-    </div>
+<ul>
+  <% @recipe.ingredients.each do |ingredient| %>
+  <li><%= ingredient.name %></li>
   <% end %>
-  <button type="submit" class="btn btn-danger" name="delete_ingredient">Delete Ingredients</button>
-</form>
-<br>
-<form action="/recipes/<%= @recipe.id %>/ingredients" method="post">
-  <input type="hidden" name="_method" value="patch">
-  <button type="submit" class="btn btn-primary" name="update_ingredient">Edit Ingredients</button>
-</form>
+</ul>
+<form action="/recipes/<%= @recipe.id %>" method="post">
+  <div class='form-group'>
+    <label for="add_ingredient">Add another ingredient</label>
+    <input type="text" name="ingredient" class="form-control">
+  </div>
+  <button type="submit" name="add_ingredient" class="btn btn-success">Add Ingredient</button>
+  <a href="/recipes/<%= @recipe.id %>/ingredients" class="btn btn-primary" role="button">Edit Ingredients</a>
 
+</form>
 
 <h3>Categories:</h3>
 <div align="center">

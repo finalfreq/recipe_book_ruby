@@ -86,8 +86,33 @@ patch '/category/:id' do
   redirect to "/category/#{category.id}"
 end
 
-patch '/recipes/:id/ingredients' do
+post '/recipes/:id' do
+  recipe = Recipe.find(params['id'])
+  new_ingredient = Ingredient.create(name: params['ingredient'])
+  recipe.ingredients.push(new_ingredient)
+  redirect to "/recipes/#{recipe.id}"
+end
+
+get '/recipes/:id/ingredients' do
   @recipe = Recipe.find(params['id'])
-  @ingredients = Ingredient.find(params['ingredient_ids'])
+  @ingredients = @recipe.ingredients
   erb :ingredients
+end
+
+delete '/recipes/:id/delete' do
+  recipe = Recipe.find(params['id'])
+  Ingredient.delete(params['ingredient_ids'])
+  # ingredients.each do |ingredient|
+  #   ingredient.delete
+  # end
+  redirect to "/recipes/#{recipe.id}"
+end
+
+patch '/recipes/:id/ingredients' do
+  recipe = Recipe.find(params['id'])
+  recipe.ingredients.each do |ingredient|
+    recipe_ingredients = Ingredient.find(ingredient.id)
+    recipe_ingredients.update(name: params["#{ingredient.id}"]) if params["#{ingredient.id}"] != ''
+  end
+  redirect to "/recipes/#{recipe.id}"
 end

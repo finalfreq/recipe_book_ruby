@@ -1,1 +1,15 @@
 <h1>Recipes</h1>
+
+<p class="lead">
+
+<ul>
+  <% @recipes.each do |recipe| %>
+    <li><%= recipe.name %></li>
+    <ul>
+      <% recipe.ingredients.each do |ingredient| %>
+      <li><%= ingredient.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</ul>
+</p>

@@ -44,3 +44,9 @@
   <button name="add_categories" type='submit' class="btn btn-success">Add Categories</button>
 </form>
 <% end %>
+
+<br>
+<form class="form-inline" action="/recipes/<%= @recipe.id %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+<button type="submit" class="btn btn-danger" name="delete_ingredient">Delete Recipe</button>
+</form>

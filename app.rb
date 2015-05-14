@@ -99,7 +99,7 @@ get '/recipes/:id/ingredients' do
   erb :ingredients
 end
 
-delete '/recipes/:id/delete' do
+delete '/recipes/:id/ingredients' do
   recipe = Recipe.find(params['id'])
   Ingredient.delete(params['ingredient_ids'])
   # ingredients.each do |ingredient|
@@ -115,4 +115,10 @@ patch '/recipes/:id/ingredients' do
     recipe_ingredients.update(name: params["#{ingredient.id}"]) if params["#{ingredient.id}"] != ''
   end
   redirect to "/recipes/#{recipe.id}"
+end
+
+delete '/recipes/:id' do
+  recipe = Recipe.find(params['id'])
+  recipe.delete
+  redirect to "/recipes"
 end

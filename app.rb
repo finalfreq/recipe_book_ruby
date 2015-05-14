@@ -48,16 +48,20 @@ post '/recipes' do
   recipe_instructions = params['instructions']
   recipe_ingredients = [params['ingredient1'], params['ingredient2'],params['ingredient3'],params['ingredient4'],params['ingredient5'],params['ingredient6'],params['ingredient7'],params['ingredient8'],params['ingredient9'],params['ingredient10'],params['ingredient11'],params['ingredient12']]
   the_recipe = Recipe.create(name: recipe_name)
-  Instruction.create(description: recipe_instructions, recipe_id: the_recipe.id)
-  ingredients = []
-  recipe_ingredients.each() do |ingredient|
-    if ingredient.length > 0
-      ingredient1 = (Ingredient.create(name: ingredient))
-      ingredients.push(ingredient1.id)
+  the_instructions = Instruction.new(description: recipe_instructions, recipe_id: the_recipe.id)
+  if the_instructions.save
+    ingredients = []
+    recipe_ingredients.each() do |ingredient|
+      if ingredient.length > 0
+        ingredient1 = (Ingredient.create(name: ingredient))
+        ingredients.push(ingredient1.id)
+      end
     end
+    the_recipe.update(ingredient_ids: ingredients )
+    redirect to '/recipes'
+  else
+    redirect to '/errors'
   end
-  the_recipe.update(ingredient_ids: ingredients )
-  redirect to '/recipes'
 end
 
 get '/categories' do

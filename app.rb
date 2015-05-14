@@ -7,7 +7,7 @@ Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 
 get '/' do
   @recipes = Recipe.all
-  erb(:index)
+  erb :index
 end
 
 get '/recipes' do
@@ -26,14 +26,22 @@ post '/recipes' do
   the_recipe = Recipe.create(name: recipe_name)
   Instruction.create(description: recipe_instructions, recipe_id: the_recipe.id)
   ingredients = []
-  ingredient_ids = []
   recipe_ingredients.each() do |ingredient|
-    ingredients.push(Ingredient.create(name: ingredient)) if ingredient.length > 0
+    if ingredient.length > 0
+      ingredient1 = (Ingredient.create(name: ingredient))
+      ingredients.push(ingredient1.id)
+    end
   end
-  ingredients.each do |ingredient|
-    ingredient_ids.push(ingredient.id)
-  end
-  the_recipe.update(ingredient_ids: ingredient_ids )
-  @recipes = Recipe.all
-  erb :recipes
+  the_recipe.update(ingredient_ids: ingredients )
+  redirect to '/recipes'
+end
+
+get '/categories' do
+  @categories = Category.all
+  erb :categories
+end
+
+post '/categories' do
+  Category.create(name: params['category_name'])
+  redirect to '/categories'
 end

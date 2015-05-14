@@ -13,7 +13,10 @@ body {
   margin: 0 auto -60px;
   /* Pad bottom by footer height */
   padding: 0 0 60px;
+  background-image: url("img/Swedish_Chef.jpg");
 }
+
+
 
 /* Set the fixed height of the footer here */
 #footer {
@@ -25,7 +28,6 @@ body {
   padding-bottom: 9px;
   margin: 40px 0 20px;
   border-bottom: 1px solid #eee;
-
   text-align: center;
 }
 

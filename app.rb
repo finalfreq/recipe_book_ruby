@@ -15,7 +15,19 @@ get '/recipes' do
   erb :recipes
 end
 
+get '/recipes/:id' do
+  if params['id'] == 'new'
+    erb :add_recipe
+  else
+    @recipe = Recipe.find(params['id'])
+    @ingredients = @recipe.ingredients
+    @instructions = @recipe.instructions.first
+    erb :recipe
+  end
+end
+
 get '/recipes/new' do
+  @categories = Category.all
   erb :add_recipe
 end
 

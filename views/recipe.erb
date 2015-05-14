@@ -1,0 +1,22 @@
+<h1>Recipe: <%= @recipe.name %></h1>
+<br>
+<h3>Instructions:</h3>
+<p>
+ <%= @instructions.description %>
+</p>
+<br>
+<h3>Ingredients</h3>
+<ul>
+  <% @ingredients.each do |ingredient| %>
+    <li><%= ingredient.name %></li>
+  <% end %>
+</ul>
+
+@recipe.categories.any?
+
+<!-- <h3>Categories:</h3>
+<div align="center">
+  <% @categoies.each do |category| %>
+    <a href="/categories/<%= category.id %>" class="btn btn-warning" role="button" id="<%= @category.id %>"><%= @category.name %></a>
+  <% end %>
+</div> -->

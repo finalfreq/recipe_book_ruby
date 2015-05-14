@@ -1,0 +1,5 @@
+<h1><%= @recipe %></h1>
+
+<% @ingredients.each do |ingredient| %>
+  <input type="text" id="<%= ingredient.id %>" value="<%= ingredient.name %>">
+<% end %>

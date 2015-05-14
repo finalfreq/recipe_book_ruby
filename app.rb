@@ -46,7 +46,7 @@ end
 post '/recipes' do
   recipe_name = params['recipe_name']
   recipe_instructions = params['instructions']
-  recipe_ingredients = [params['ingredient1'], params['ingredient2'],params['ingredient3'],params['ingredient4']]
+  recipe_ingredients = [params['ingredient1'], params['ingredient2'],params['ingredient3'],params['ingredient4'],params['ingredient5'],params['ingredient6'],params['ingredient7'],params['ingredient8'],params['ingredient9'],params['ingredient10'],params['ingredient11'],params['ingredient12']]
   the_recipe = Recipe.create(name: recipe_name)
   Instruction.create(description: recipe_instructions, recipe_id: the_recipe.id)
   ingredients = []
@@ -84,4 +84,10 @@ patch '/category/:id' do
     category.recipes.push(recipe)
   end
   redirect to "/category/#{category.id}"
+end
+
+patch '/recipes/:id/ingredients' do
+  @recipe = Recipe.find(params['id'])
+  @ingredients = Ingredient.find(params['ingredient_ids'])
+  erb :ingredients
 end

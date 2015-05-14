@@ -5,12 +5,24 @@
  <%= @instructions.description %>
 </p>
 <br>
-<h3>Ingredients</h3>
-<ul>
+<h3>Ingredients:</h3>
+<form action="/recipes/<%= @recipe.id %>" method="post">
+  <input type="hidden" name="_method" value="delete">
   <% @ingredients.each do |ingredient| %>
-    <li><%= ingredient.name %></li>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="ingredient_ids[]" value="<%= ingredient.id %>"> <%= ingredient.name %>
+      </label>
+    </div>
   <% end %>
-</ul>
+  <button type="submit" class="btn btn-danger" name="delete_ingredient">Delete Ingredients</button>
+</form>
+<br>
+<form action="/recipes/<%= @recipe.id %>/ingredients" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <button type="submit" class="btn btn-primary" name="update_ingredient">Edit Ingredients</button>
+</form>
+
 
 <h3>Categories:</h3>
 <div align="center">

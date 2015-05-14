@@ -7,7 +7,7 @@
     <label for="recipe_name">Change Recipe Name</label>
     <input type="text" name="recipe_name" class="form-control">
   </div>
-  <button type="submit" class="btn btn-success" id="update_recipe">Update Recipe</button>
+  <button type="submit" class="btn btn-success" id="edit_recipe">Update Recipe</button>
 </form>
 <h3>Ingredients:</h3>
 <ul>
@@ -60,7 +60,7 @@
 <br>
 <form class="form-inline" action="/recipes/<%= @recipe.id %>" method="post">
   <input type="hidden" name="_method" value="delete">
-<button type="submit" class="btn btn-danger" name="delete_ingredient">Delete Recipe</button>
+<button type="submit" class="btn btn-danger" id="delete_recipe">Delete Recipe</button>
 </form>
 
 </div>

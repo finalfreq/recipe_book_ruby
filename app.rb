@@ -3,47 +3,21 @@ Bundler.require(:default)
 require 'pry'
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 
-
+###########   INDEX   ##########
 
 get '/' do
   @recipes = Recipe.all
   erb :index
 end
 
+###########   INDEX   ##########
+
+
+###########   RECIPES   ##########
+
 get '/recipes' do
   @recipes = Recipe.all
   erb :recipes
-end
-
-get '/recipes/:id' do
-  if params['id'] == 'new'
-    erb :add_recipe
-  else
-    @recipe = Recipe.find(params['id'])
-    @ingredients = @recipe.ingredients
-    @instructions = @recipe.instructions.first
-    @recipe_categories = @recipe.categories
-    @categories = Category.all
-    erb :recipe
-  end
-end
-
-patch '/recipes/:id' do
-  recipe = Recipe.find(params['id'])
-  recipe.update(name: params.fetch('recipe_name', recipe.name))
-  if params['category_ids'] != nil
-    categories = Category.find(params.fetch('category_ids'))
-    categories.each do |category|
-      recipe.categories.push(category)
-    end
-  end
-  redirect to "/recipes/#{recipe.id}"
-end
-
-
-get '/recipes/new' do
-  @categories = Category.all
-  erb :add_recipe
 end
 
 post '/recipes' do
@@ -66,6 +40,54 @@ post '/recipes' do
     redirect to '/errors'
   end
 end
+
+get '/recipes/new' do
+  @categories = Category.all
+  erb :add_recipe
+end
+
+get '/recipes/:id' do
+  if params['id'] == 'new'
+    erb :add_recipe
+  else
+    @recipe = Recipe.find(params['id'])
+    @ingredients = @recipe.ingredients
+    @instructions = @recipe.instructions.first
+    @recipe_categories = @recipe.categories
+    @categories = Category.all
+    erb :recipe
+  end
+end
+
+post '/recipes/:id' do
+  recipe = Recipe.find(params['id'])
+  new_ingredient = Ingredient.create(name: params['ingredient'])
+  recipe.ingredients.push(new_ingredient)
+  redirect to "/recipes/#{recipe.id}"
+end
+
+patch '/recipes/:id' do
+  recipe = Recipe.find(params['id'])
+  recipe.update(name: params.fetch('recipe_name', recipe.name))
+  if params['category_ids'] != nil
+    categories = Category.find(params.fetch('category_ids'))
+    categories.each do |category|
+      recipe.categories.push(category)
+    end
+  end
+  redirect to "/recipes/#{recipe.id}"
+end
+
+delete '/recipes/:id' do
+  recipe = Recipe.find(params['id'])
+  recipe.delete
+  redirect to "/recipes"
+end
+
+###########   RECIPES   ##########
+
+
+###########   CATEGORIES   ##########
 
 get '/categories' do
   @categories = Category.all
@@ -93,12 +115,17 @@ patch '/category/:id' do
   redirect to "/category/#{category.id}"
 end
 
-post '/recipes/:id' do
-  recipe = Recipe.find(params['id'])
-  new_ingredient = Ingredient.create(name: params['ingredient'])
-  recipe.ingredients.push(new_ingredient)
-  redirect to "/recipes/#{recipe.id}"
+delete '/category/:id' do
+  category = Category.find(params['id'])
+  category.delete
+  redirect to "/categories"
 end
+
+###########   CATEGORIES   ##########
+
+
+###########   INGREDIENTS   ##########
+
 
 get '/recipes/:id/ingredients' do
   @recipe = Recipe.find(params['id'])
@@ -109,9 +136,6 @@ end
 delete '/recipes/:id/ingredients' do
   recipe = Recipe.find(params['id'])
   Ingredient.delete(params['ingredient_ids'])
-  # ingredients.each do |ingredient|
-  #   ingredient.delete
-  # end
   redirect to "/recipes/#{recipe.id}"
 end
 
@@ -124,8 +148,4 @@ patch '/recipes/:id/ingredients' do
   redirect to "/recipes/#{recipe.id}"
 end
 
-delete '/recipes/:id' do
-  recipe = Recipe.find(params['id'])
-  recipe.delete
-  redirect to "/recipes"
-end
+###########   INGREDIENTS   ##########

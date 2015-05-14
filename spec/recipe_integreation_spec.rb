@@ -16,8 +16,8 @@
    end
    it 'allows you to edit the recipe name' do
      click_on 'Tomato Soup'
-     click_on 'edit_recipe'
      fill_in 'recipe_name', with: "HoT PoCKets"
+     click_on 'edit_recipe'
      expect(page).to have_content 'Hot Pockets'
    end
  end

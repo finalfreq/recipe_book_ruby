@@ -30,9 +30,12 @@ end
 
 patch '/recipes/:id' do
   recipe = Recipe.find(params['id'])
-  categories = Category.find(params['category_ids'])
-  categories.each do |category|
-    recipe.categories.push(category)
+  recipe.update(name: params.fetch('recipe_name', recipe.name))
+  if params['category_ids'] != nil
+    categories = Category.find(params.fetch('category_ids'))
+    categories.each do |category|
+      recipe.categories.push(category)
+    end
   end
   redirect to "/recipes/#{recipe.id}"
 end

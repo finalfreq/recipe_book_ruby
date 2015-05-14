@@ -1,4 +1,11 @@
 <h1>Recipe: <%= @recipe.name %></h1>
+<form action="/recipes/<%= @recipe.id %>" method="post">
+  <input required type="hidden" name="_method" value="patch">
+  <div class="form-group"
+    <label for="recipe_name">Change Recipe Name</label>
+    <input type="text" name="recipe_name" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-primary" id="update_recipe">Update Recipe</button>
 <br>
 <h3>Instructions:</h3>
 <p>
@@ -27,26 +34,7 @@
     <a href="/category/<%= category.id %>" class="btn btn-warning" role="button" id="<%= category.id %>"><%= category.name %></a>
   <% end %>
 </div>
-
-<% unless @recipe_categories.length == @categories.length %>
-<h4>Add Categories:</h4>
-<form action="/recipes/<%= @recipe.id %>" method="post">
-  <input type="hidden" name="_method" value="patch">
-  <% @categories.each do |category| %>
-    <% unless @recipe.categories.include?(category) %>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" name="category_ids[]" value="<%= category.id %>"> <%= category.name %>
-      </label>
-    </div>
-    <% end %>
-  <% end %>
-  <button name="add_categories" type='submit' class="btn btn-success">Add Categories</button>
+  </div>
 </form>
-<% end %>
-
-<br>
-<form class="form-inline" action="/recipes/<%= @recipe.id %>" method="post">
-  <input type="hidden" name="_method" value="delete">
-<button type="submit" class="btn btn-danger" name="delete_ingredient">Delete Recipe</button>
-</form>
+  <button type="submit" name="add_ingredient" class="btn btn-success">Add Ingredient</button>
+  <a href="/recipes/<%= @recipe.id %>/ingredients" class="btn btn-success" role="button">Edit Ingredients</a>

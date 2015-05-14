@@ -4,12 +4,33 @@
   <meta charset="utf-8">
   <title>Recipebook</title>
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
-
+  <link rel="stylesheet" href="<%= url('/styles.css') %>">
 </head>
 <body>
+  <div id="wrap">
+  <div id="site_header">
+    <h1>Welcome to Martha Stewart's Insider Trading Recipebook</h1>
+  </div>
   <div class="container">
     <%= yield %>
   </div>
-
+</div>
 </body>
+<footer>
+  <div id ="footer">
+    <div class ="row">
+      <div class="text-center">
+        <div class="col-md-4">
+          <a id='home' href="/">Home</a>
+        </div>
+        <div class="col-md-4">
+          <a id='recipes' href="/recipes">Recipes</a>
+        </div>
+        <div class="col-md-4">
+          <a id='categories' href="/categories">Categories</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
 </html>

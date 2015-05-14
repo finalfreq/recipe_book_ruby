@@ -8,6 +8,8 @@
   <% end %>
 </ul>
 <% end %>
+<% unless @category_recipes.length == @recipes.length %>
+<h4>Add Recipes:</h4>
 <form action="/category/<%= @category.id %>" method="post">
   <input type="hidden" name="_method" value="patch">
   <% @recipes.each do |recipe| %>
@@ -19,6 +21,6 @@
     </div>
     <% end %>
   <% end %>
-  <button name="add_recipes" type='submit' class="btn btn-primary">Add Recipes</button>
-
+  <button name="add_recipes" type='submit' class="btn btn-success">Add Recipes</button>
 </form>
+<% end %>

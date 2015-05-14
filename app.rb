@@ -22,9 +22,21 @@ get '/recipes/:id' do
     @recipe = Recipe.find(params['id'])
     @ingredients = @recipe.ingredients
     @instructions = @recipe.instructions.first
+    @recipe_categories = @recipe.categories
+    @categories = Category.all
     erb :recipe
   end
 end
+
+patch '/recipes/:id' do
+  recipe = Recipe.find(params['id'])
+  categories = Category.find(params['category_ids'])
+  categories.each do |category|
+    recipe.categories.push(category)
+  end
+  redirect to "/recipes/#{recipe.id}"
+end
+
 
 get '/recipes/new' do
   @categories = Category.all
